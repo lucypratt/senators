@@ -22,13 +22,14 @@ const theData = getAPIData('senators.json').then(data => {
     simpleSenators = makeSimpleMap(allSenators)
     republicans = makeFilter(simpleSenators, "R")
     democrats = makeFilter(simpleSenators, "D")
+    //This will sort because it's before the populateDOM
+    console.log(sortSenatorsByAge(simpleSenators))
     populateDOM(simpleSenators)
     
-    console.log(republicans)
 })
 
 
-//Mapping Practice
+//Mapping Practice - Good for taking an existing array, looping through elements, and creating a new, custom array
 function makeSimpleMap(allofthem) {
     let results = allofthem.map(senator => {
         return {
@@ -37,7 +38,8 @@ function makeSimpleMap(allofthem) {
             party: senator.party,
             age: `${calculate_age(new Date (senator.date_of_birth))}`,
             gender: senator.gender,
-            total_votes: senator.total_votes,         
+            total_votes: senator.total_votes,
+            twitter_account: senator.twitter_account,      
 
 
         }
@@ -46,11 +48,13 @@ function makeSimpleMap(allofthem) {
 }
 
 //Filtering Practice - Don't filter what doesn't exist in the code yet
+//Also loops through array but only returns elements that matcha  certain condition
 function makeFilter(simpleList, affiliation) {
     return simpleList.filter(senator => senator.party === affiliation)
 }
 
-//Reduce Practice
+//Reduce Practice - Takes 2 parameters. The function, and the starting place
+//Good for getting to the element you do want
 const testArray = [5,10,15,20,25,30,35,40,45,50,30]
 const testReduce = testArray.reduce((acc, num) => {
     return acc + num
@@ -62,6 +66,17 @@ function totalVotes(senatorList) {
 
     }, 0)
     return results
+}
+function oldestSenator(senatorList) {
+    return senatorList.reduce((oldest, senator) => {
+        return (oldest.age || 0) > senator.age ? oldest : senator
+    }, {})
+}
+
+function sortSenatorsByAge(senatorList) {
+return senatorList.sort(function (a, b) {
+    return a.age - b.age
+})
 }
 
 
@@ -102,11 +117,11 @@ media.setAttribute('class', 'media')
 let mediaLeft = document.createElement('div')
 mediaLeft.setAttribute('class', 'media-left')
 let figure = document.createElement('figure')
-figure.setAttribute('class', 'image is-96x96')
+figure.setAttribute('class', 'image is-48x48')
 let img = document.createElement('img')
 
 if (senator.party === "D") {
-    img.src= `/images/blue.png`
+    img.src= `/images/twitter.png`
 
 }
 if (senator.party === "ID") {
@@ -114,7 +129,7 @@ if (senator.party === "ID") {
 
 }
 if (senator.party === "R") {
-    img.src= `/images/red.png`
+    img.src= `/images/redtwitter.png`
 
 }
 
@@ -123,7 +138,7 @@ let mediaContent = document.createElement('div')
 mediaContent.setAttribute('class', 'media-content')
 let titleP = document.createElement('p')
 titleP.setAttribute('class', 'title is-5')
-titleP.textContent = senator.name
+titleP.textContent = senator.twitter_account
 let subtitleP = document.createElement('p')
 /*subtitleP.setAttribute('class', 'subtitle is-6')
 subtitleP.textContent = `${senator.state_rank}`*/ //This is because we didn't set it in the simpleSenators mapping array
