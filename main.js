@@ -39,9 +39,9 @@ function makeSimpleMap(allofthem) {
             age: `${calculate_age(new Date (senator.date_of_birth))}`,
             gender: senator.gender,
             total_votes: senator.total_votes,
-            twitter_account: senator.twitter_account,      
-
-
+            twitter_account: senator.twitter_account, 
+            votes_w_party: senator.votes_with_party_pct,
+            phone: senator.phone,
         }
     })
     return results
@@ -96,7 +96,11 @@ function populateDOM(senator_array) {
         figure.setAttribute('class', 'image')
         let figureImage = document.createElement('img')
         figureImage.src = `https://www.congress.gov/img/member/${senator.id.toLowerCase()}_200.jpg`
-        figureImage.alt = 'Placeholder image'
+        figureImage.addEventListener('error', (event) => {
+            let badImage = event.target;
+            badImage.src="/images/person.png";
+        });
+       
 
         figure.appendChild(figureImage)
         cardImage.appendChild(figure)
@@ -145,8 +149,7 @@ subtitleP.textContent = `${senator.state_rank}`*/ //This is because we didn't se
 
 let contentDiv = document.createElement('div')
 contentDiv.setAttribute('class', 'content')
-contentDiv.textContent = `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-Phasellus nec iaculis mauris.`
+contentDiv.textContent = `About: My name is ${senator.name} and I vote with my party ${senator.votes_w_party}% of the time. Contact me today at ${senator.phone}`
 let contentBreak = document.createElement('br')
 let ageP = document.createElement('p')
 ageP.textContent = senator.age
