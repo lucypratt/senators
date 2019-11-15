@@ -117,7 +117,7 @@ media.setAttribute('class', 'media')
 let mediaLeft = document.createElement('div')
 mediaLeft.setAttribute('class', 'media-left')
 let figure = document.createElement('figure')
-figure.setAttribute('class', 'image is-48x48')
+figure.setAttribute('class', 'image is-24x24')
 let img = document.createElement('img')
 
 if (senator.party === "D") {
