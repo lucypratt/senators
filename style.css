@@ -13,3 +13,8 @@ margin-bottom: 6rem;
 figure img {
     width: 200px;
 }
+.media-left {
+padding: 3px;
+ border: 1px solid gray;
+ border-radius: .5rem;
+}
