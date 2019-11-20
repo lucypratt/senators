@@ -55,11 +55,6 @@ function makeFilter(simpleList, affiliation) {
 
 //Reduce Practice - Takes 2 parameters. The function, and the starting place
 //Good for getting to the element you do want
-const testArray = [5,10,15,20,25,30,35,40,45,50,30]
-const testReduce = testArray.reduce((acc, num) => {
-    return acc + num
-}, 0)
-
 function totalVotes(senatorList) {
    const results = senatorList.reduce((acc, senator) => {
        return acc + senator.total_votes
